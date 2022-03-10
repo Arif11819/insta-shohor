@@ -27,7 +27,6 @@ const reportPost = (id) => {
 };
 
 const displayContent = (text) => {
-  console.log(text)
   return text.length < 30 ? text : text.slice(0, 30) + "<span class='fw - bold'>... read more</span>";
 };
 
@@ -36,24 +35,22 @@ const switchTab = (id) => {
     document.getElementById('posts').style.display = 'grid';
     document.getElementById('liked').style.display = 'none';
     document.getElementById('reported').style.display = 'none';
-
   } else if (id === "liked") {
     document.getElementById("liked").style.display = "block";
     document.getElementById("posts").style.display = "none";
     document.getElementById("reported").style.display = "none";
-
     displayLikedPosts();
+
   } else {
     document.getElementById("reported").style.display = "block";
     document.getElementById("posts").style.display = "none";
     document.getElementById("liked").style.display = "none";
-
     displayReportedPosts();
+
   }
 };
 
 const createPost = (post) => {
-  console.log(post)
   const image = post.userImage;
   const div = document.createElement("article");
   div.classList.add("post");
@@ -98,8 +95,7 @@ const createPost = (post) => {
 
                   <div class="post__indicators"></div>
 
-                  <button class="post__button post__button--align-right" onclick="reportPost(${post.id
-    })">
+                  <button class="post__button post__button--align-right" onclick="reportPost(${post.id})">
                     <i class="fa-solid fa-ban"></i>
                   </button>
                 </div>
@@ -145,6 +141,7 @@ const showPosts = (posts) => {
 };
 
 const displayLikedPosts = () => {
+  document.getElementById("liked").innerHTML = '';
   const likedPosts = getLikedPosts();
   likedPosts.forEach((post) => {
     const div = createPost(post);
@@ -153,8 +150,9 @@ const displayLikedPosts = () => {
 };
 
 const displayReportedPosts = () => {
+  document.getElementById("reported").innerHTML = '';
   const reportedPosts = getReportedPosts();
-  posts.forEach((post) => {
+  reportedPosts.forEach((post) => {
     const div = createPost(post);
     document.getElementById("reported").appendChild(div);
   });
@@ -165,5 +163,4 @@ const loadPosts = async () => {
   posts = await data.json();
   showPosts(posts);
 }
-
 loadPosts();
